@@ -1,4 +1,10 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+export const GlobalContainer = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1600px;
+`;
 
 export const GlobalStyle = createGlobalStyle`
 * {
@@ -16,6 +22,6 @@ li {
 }
 
 :root {
-    --color-primary: black
+    --color-primary: red;
 }
 `;
