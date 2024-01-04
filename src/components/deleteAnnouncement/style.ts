@@ -10,7 +10,7 @@ export const DeleteAnnouncementComponentStyled = styled.div`
     display: flex;
     gap: 10px;
     button {
-      width: 100%;
+      width: 200px;
       height: 50px;
       border-radius: 16px;
       background-color: transparent;

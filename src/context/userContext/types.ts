@@ -1,3 +1,4 @@
+import { userUpdate } from "../../components/editUserComponent";
 import { tAnnouncement } from "../carsContext/types";
 
 export interface iAppContextProps {
@@ -30,4 +31,9 @@ export interface iAppContext {
   optionsUser: boolean;
   userLogout: () => void;
   loadingLogin: boolean;
+  userAtt: () => void;
+  adminPainelFunction: "anuncio" | "criar" | "conta";
+  changePainelScreen: (value: "anuncio" | "criar" | "conta") => void;
+  userUpdate: (data: userUpdate) => void;
+  userDelete: () => void;
 }

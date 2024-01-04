@@ -6,12 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { ModalComponentAnnouncementItens } from "../modalComponentItens";
 import { DeleteAnnouncementComponent } from "../deleteAnnouncement";
 import { CarsContext } from "../../context/carsContext";
+import { EditAnnouncement } from "../editAnnouncement";
 
 export const ListAnnouncementsComponentAdmin = () => {
-  const { user } = useContext(UserContext);
+  const { user, loadingLogin } = useContext(UserContext);
   const navigate = useNavigate();
   const [showMenuAnnouncement, setShowMenuAnnouncement] = useState(false);
-  const { openModalCars, changeOpenModalCars } = useContext(CarsContext);
+  const [selectList, setSelectList] = useState(0);
+  const { openModalCars, changeOpenModalCars, changeAnnouncementMark } =
+    useContext(CarsContext);
 
   return (
     <ListAnnouncementsComponentsAdminStyle>
@@ -21,17 +24,14 @@ export const ListAnnouncementsComponentAdmin = () => {
         />
       ) : (
         openModalCars === "edit" && (
-          <ModalComponentAnnouncementItens
-            children={<DeleteAnnouncementComponent />}
-          />
+          <ModalComponentAnnouncementItens children={<EditAnnouncement />} />
         )
       )}
-
-      {!user?.announcements ? (
-        <h2>Sem anúncios no momento</h2>
+      {!user?.announcements.length || loadingLogin ? (
+        <p>Você ainda não tem anúncios</p>
       ) : (
         user.announcements.map((e) => (
-          <li className="list-announcement-admin">
+          <li key={e.id} className="list-announcement-admin">
             <div>
               <span>
                 <img src={e.photos[0].image} alt="" />
@@ -49,20 +49,40 @@ export const ListAnnouncementsComponentAdmin = () => {
               </div>
             </div>
             <img
-              onClick={() => setShowMenuAnnouncement(!showMenuAnnouncement)}
               className="menu-icon"
               src={optionsImg}
               alt=""
+              onClick={() => {
+                if (e.id === selectList) {
+                  setShowMenuAnnouncement(false);
+                  setSelectList(0);
+                  return;
+                }
+                setSelectList(e.id);
+              }}
             />
-            {showMenuAnnouncement && (
+
+            {selectList === e.id && (
               <span className="options-announcement-admin">
                 <button onClick={() => navigate(`/detail/${e.id}`)}>
                   Ver anúncio
                 </button>
-                <button onClick={() => changeOpenModalCars("edit")}>
+                <button
+                  onClick={() => {
+                    changeAnnouncementMark(e);
+                    changeOpenModalCars("edit");
+                    setShowMenuAnnouncement(!showMenuAnnouncement);
+                  }}
+                >
                   Editar anúncio
                 </button>
-                <button onClick={() => changeOpenModalCars("delete")}>
+                <button
+                  onClick={() => {
+                    changeAnnouncementMark(e);
+                    setShowMenuAnnouncement(!showMenuAnnouncement);
+                    changeOpenModalCars("delete");
+                  }}
+                >
                   Deletar anúncio
                 </button>
               </span>

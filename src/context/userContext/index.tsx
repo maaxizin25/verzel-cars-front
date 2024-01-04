@@ -10,6 +10,7 @@ import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
+import { userUpdate } from "../../components/editUserComponent";
 
 export const UserContext = createContext({} as iAppContext);
 
@@ -21,17 +22,32 @@ export const UserProvider = ({ children }: iAppContextProps) => {
   const [modalUser, setModalUser] = useState(false);
   const [modalType, setModalType] = useState<string>("login");
   const [optionsUser, setOptionsUser] = useState(false);
+  const [idUser, setIdUser] = useState(0);
+  const [adminPainelFunction, setAdminPainelFunction] = useState<
+    "anuncio" | "criar" | "conta"
+  >("anuncio");
 
   useEffect(() => {
     async function verifyToken() {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("id");
+      if (userId) {
+        setIdUser(Number(userId));
+      }
 
       if (token && userId) {
-        setLoadingLogin(true);
-        const user = await api.get(`/users/${userId}`);
-        setUser(user.data);
-        setLoadingLogin(false);
+        const newToken = JSON.parse(token);
+        api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+        try {
+          setLoadingLogin(true);
+          const user = await api.get(`/users/${userId}`);
+          setUser(user.data);
+        } catch (error) {
+          console.error;
+          userLogout();
+        } finally {
+          setLoadingLogin(false);
+        }
       }
     }
     verifyToken();
@@ -63,10 +79,10 @@ export const UserProvider = ({ children }: iAppContextProps) => {
     try {
       setStates("loadingLogin", true);
       const userLogin = await api.post("/users/login", data);
-      let token = userLogin.data.refresh;
-      localStorage.setItem("token", token);
-      token = jwtDecode(userLogin.data.refresh);
-      localStorage.setItem("id", token.user_id);
+      let token = userLogin.data.access;
+      localStorage.setItem("token", JSON.stringify(token));
+      token = jwtDecode(token);
+      localStorage.setItem("id", JSON.stringify(token.user_id));
       setLoginClick(true);
       toast.success("Login efetuado com sucesso.");
       setStates("modalUser", false);
@@ -105,6 +121,58 @@ export const UserProvider = ({ children }: iAppContextProps) => {
     localStorage.removeItem("token");
     setUser(null);
   };
+  const userAtt = async () => {
+    try {
+      setStates("loadingLogin", true);
+      const response = await api.get(`/users/${idUser}`);
+      setUser(response.data);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error("Erro interno");
+      }
+    } finally {
+      setStates("loadingLogin", false);
+    }
+  };
+  const changePainelScreen = (value: "anuncio" | "criar" | "conta") => {
+    setAdminPainelFunction(value);
+  };
+  const userUpdate = async (data: userUpdate) => {
+    console.log(data);
+
+    try {
+      setStates("loadingLogin", true);
+      const response = await api.patch(
+        `/users/${idUser}`,
+        JSON.stringify(data)
+      );
+      console.log("Resposta da atualização do usuário:", response.data);
+      toast.success("Dados alterados com sucesso.");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error();
+        toast.error("Email já existe");
+      }
+    } finally {
+      setStates("loadingLogin", false);
+    }
+  };
+
+  const userDelete = async () => {
+    try {
+      setStates("loadingLogin", true);
+      await api.delete(`/users/${idUser}`);
+      toast.success("Usuário deletado com sucesso.");
+      userLogout();
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error();
+        toast.error("Email já existe");
+      }
+    } finally {
+      setStates("loadingLogin", false);
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -120,6 +188,11 @@ export const UserProvider = ({ children }: iAppContextProps) => {
         optionsUser,
         userLogout,
         loadingLogin,
+        userAtt,
+        adminPainelFunction,
+        changePainelScreen,
+        userUpdate,
+        userDelete,
       }}
     >
       {" "}

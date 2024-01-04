@@ -1,3 +1,6 @@
+import { requestAnnouncement } from "../../components/createAnnouncement";
+import { iUserData } from "../userContext/types";
+
 export interface iAppContextProps {
   children: React.ReactNode;
 }
@@ -20,10 +23,17 @@ export interface tAnnouncement {
       image: string;
     }
   ];
+  user: iUserData;
 }
 
 export interface iAppContext {
   announcementList: null | [tAnnouncement];
   openModalCars: null | string;
   changeOpenModalCars: (value: string | null) => void;
+  changeAnnouncementMark: (value: tAnnouncement | null) => void;
+  announcementMark: tAnnouncement | null;
+  updateAnnouncement: (data: tAnnouncement) => void;
+  buttonLoadingCars: boolean;
+  deleteAnnouncement: () => void;
+  createAnnouncement: (data: requestAnnouncement | unknown) => void;
 }

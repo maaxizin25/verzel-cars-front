@@ -3,10 +3,13 @@ import iconImg from "../../assets/icon-login.svg";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { LoginAndRegisterComponent } from "../loginAndRegisterComponent";
+import { useNavigate } from "react-router-dom";
 
 export const NavBarComponent = () => {
   const { modalUser, setStates, user, loadingLogin, optionsUser, userLogout } =
     useContext(UserContext);
+
+  const navigate = useNavigate();
 
   return (
     <NavBarStyled>
@@ -38,7 +41,7 @@ export const NavBarComponent = () => {
             )}
             {optionsUser && (
               <div className="modalOptions">
-                <p>Admin</p>
+                <p onClick={() => navigate("/admin")}>Admin</p>
                 <p onClick={userLogout}>Logout</p>
               </div>
             )}
