@@ -16,10 +16,13 @@ export const DetailPage = () => {
     return (
       <>
         <NavBarComponent />
-        <p style={{ padding: "10px 20px" }}>{"Carros > Carro Nome"}</p>
+
         <DetailPageStyle>
-          <DetailCarImgComponent car={car} />
-          <DetailCarTextComponent car={car} />
+          <p className="return-title">{`Carros > ${car.nome}`}</p>
+          <div className="container-details">
+            <DetailCarImgComponent car={car} />
+            <DetailCarTextComponent car={car} />
+          </div>
         </DetailPageStyle>
       </>
     );

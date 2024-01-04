@@ -29,8 +29,8 @@ export const DetailCarImgComponent: React.FC<DetailCarImgComponentProps> = ({
             <h3>São paulo</h3>
           </div>
           <div>
-            <p>Final da placa</p>
-            <h3>{car.placa[7]}</h3>
+            <p>Placa</p>
+            <h3>{car.placa}</h3>
           </div>
         </div>
         <div className="info-two">

@@ -39,6 +39,9 @@ export const NavBarStyled = styled.nav`
         background-color: transparent;
         font-size: 22px;
       }
+      .loginUser {
+        font-size: 15px;
+      }
     }
   }
 `;

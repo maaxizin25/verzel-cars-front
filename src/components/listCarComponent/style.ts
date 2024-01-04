@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const ListCarComponentStyle = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1600px;
+  min-width: 1000px;
+  max-width: 1020px;
   ul {
     display: flex;
     flex-wrap: wrap;
