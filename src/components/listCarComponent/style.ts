@@ -15,7 +15,7 @@ export const ListCarComponentStyle = styled.div`
       max-width: 333px;
       background-color: #1f1f1f;
       border-radius: 16px;
-      max-height: 400px;
+      max-height: 450px;
       cursor: pointer;
       img {
         width: 100%;

@@ -4,8 +4,7 @@ export const ListAnnouncementsComponentsAdminStyle = styled.ul`
   display: flex;
   flex-direction: column;
   background-color: whitesmoke;
-  width: 100%;
-  max-width: 1000px;
+  width: 100% !important;
   border-radius: 8px;
   .list-announcement-admin {
     width: 100%;

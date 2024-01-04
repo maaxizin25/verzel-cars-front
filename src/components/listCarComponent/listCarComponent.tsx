@@ -19,7 +19,7 @@ export const ListCarComponent = () => {
           announcementList?.map((e) => (
             <li onClick={() => navigate(`detail/${e.id}`)} key={e.id}>
               <div>
-                {/*                 <img src={e.photos[0].image} alt="" /> */}
+                <img src={e.photos[0].image} alt="" />
               </div>
               <div className="texts">
                 <h2>

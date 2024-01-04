@@ -27,7 +27,7 @@ export const PainelComponent = () => {
             <img src={adminIcon2} alt="" />
             <p>Criar anúncio</p>
           </li>
-          <li>
+          <li onClick={() => changePainelScreen("conta")}>
             <img src={adminIcon3} alt="" />
             <p>Conta</p>
           </li>

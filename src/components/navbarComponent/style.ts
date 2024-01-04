@@ -49,6 +49,7 @@ export const NavBarStyled = styled.nav`
     .modalOptions {
       top: 45px;
       display: flex;
+      z-index: 1000;
       padding: 20px 0px;
       flex-direction: column;
       gap: 10px;

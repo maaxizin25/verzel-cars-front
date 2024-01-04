@@ -10,6 +10,7 @@ import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
+import { userUpdate } from "../../components/editUserComponent";
 
 export const UserContext = createContext({} as iAppContext);
 
@@ -136,6 +137,42 @@ export const UserProvider = ({ children }: iAppContextProps) => {
   const changePainelScreen = (value: "anuncio" | "criar" | "conta") => {
     setAdminPainelFunction(value);
   };
+  const userUpdate = async (data: userUpdate) => {
+    console.log(data);
+
+    try {
+      setStates("loadingLogin", true);
+      const response = await api.patch(
+        `/users/${idUser}`,
+        JSON.stringify(data)
+      );
+      console.log("Resposta da atualização do usuário:", response.data);
+      toast.success("Dados alterados com sucesso.");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error();
+        toast.error("Email já existe");
+      }
+    } finally {
+      setStates("loadingLogin", false);
+    }
+  };
+
+  const userDelete = async () => {
+    try {
+      setStates("loadingLogin", true);
+      await api.delete(`/users/${idUser}`);
+      toast.success("Usuário deletado com sucesso.");
+      userLogout();
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error();
+        toast.error("Email já existe");
+      }
+    } finally {
+      setStates("loadingLogin", false);
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -154,6 +191,8 @@ export const UserProvider = ({ children }: iAppContextProps) => {
         userAtt,
         adminPainelFunction,
         changePainelScreen,
+        userUpdate,
+        userDelete,
       }}
     >
       {" "}

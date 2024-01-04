@@ -1,4 +1,5 @@
 import { requestAnnouncement } from "../../components/createAnnouncement";
+import { iUserData } from "../userContext/types";
 
 export interface iAppContextProps {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export interface tAnnouncement {
       image: string;
     }
   ];
+  user: iUserData;
 }
 
 export interface iAppContext {
