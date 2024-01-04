@@ -2,7 +2,7 @@ export interface iAppContextProps {
   children: React.ReactNode;
 }
 
-export interface announcement {
+export interface tAnnouncement {
   id: number;
   nome: string;
   marca: string;
@@ -23,5 +23,5 @@ export interface announcement {
 }
 
 export interface iAppContext {
-  announcementList: null | [announcement];
+  announcementList: null | [tAnnouncement];
 }

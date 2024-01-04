@@ -1,9 +1,9 @@
-import { HomePage } from "./pages/homepage";
+import { RoutersMain } from "./routes/routes";
 
 function App() {
   return (
     <>
-      <HomePage />
+      <RoutersMain />
     </>
   );
 }

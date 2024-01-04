@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CarsContext } from "../../context/carsContext";
 import { ListCarComponentStyle } from "./style";
+import { useNavigate } from "react-router-dom";
 
 export const ListCarComponent = () => {
   const { announcementList } = useContext(CarsContext);
@@ -10,7 +11,7 @@ export const ListCarComponent = () => {
       <h2>Carros</h2>
       <ul>
         {announcementList?.map((e) => (
-          <li>
+          <li key={e.id}>
             <div>
               <img src={e.photos[0].image} alt="" />
             </div>

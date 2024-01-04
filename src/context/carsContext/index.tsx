@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-import { announcement, iAppContext, iAppContextProps } from "./types";
+import { tAnnouncement, iAppContext, iAppContextProps } from "./types";
 import { api } from "../../services/api";
 
 export const CarsContext = createContext({} as iAppContext);
 
 export const CarsProvider = ({ children }: iAppContextProps) => {
   const [announcementList, setAnnouncementList] = useState<
-    [announcement] | null
+    [tAnnouncement] | null
   >(null);
 
   useEffect(() => {
