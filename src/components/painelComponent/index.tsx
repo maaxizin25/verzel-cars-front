@@ -7,7 +7,7 @@ import { PainelComponentStyle } from "./style";
 import { UserContext } from "../../context/userContext";
 
 export const PainelComponent = () => {
-  const { userLogout } = useContext(UserContext);
+  const { userLogout, changePainelScreen } = useContext(UserContext);
   return (
     <PainelComponentStyle>
       <span>
@@ -15,11 +15,15 @@ export const PainelComponent = () => {
           <h2>PAINEL</h2>
         </span>
         <ul>
-          <li>
+          <li
+            onClick={() => {
+              changePainelScreen("anuncio");
+            }}
+          >
             <img src={adminIcon1} alt="" />
             <p>Meus anúncios</p>
           </li>
-          <li>
+          <li onClick={() => changePainelScreen("criar")}>
             <img src={adminIcon2} alt="" />
             <p>Criar anúncio</p>
           </li>

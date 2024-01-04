@@ -2,17 +2,21 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { tAnnouncement, iAppContext, iAppContextProps } from "./types";
 import { api } from "../../services/api";
 import { UserContext } from "../userContext";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { requestAnnouncement } from "../../components/createAnnouncement";
 
 export const CarsContext = createContext({} as iAppContext);
 
 export const CarsProvider = ({ children }: iAppContextProps) => {
-  const { setStates } = useContext(UserContext);
+  const { setStates, userAtt } = useContext(UserContext);
   const [announcementList, setAnnouncementList] = useState<
     [tAnnouncement] | null
   >(null);
   const [openModalCars, setModalCars] = useState<null | string>(null);
   const [announcementMark, setAnnouncementMark] =
     useState<tAnnouncement | null>(null);
+  const [buttonLoadingCars, setButtonLoadingCars] = useState(false);
 
   useEffect(() => {
     async function getAnnouncement() {
@@ -36,6 +40,60 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
     setAnnouncementMark(announcement);
   };
 
+  const updateAnnouncement = async (data: unknown) => {
+    try {
+      setButtonLoadingCars(true);
+      await api.patch(`/announcement/${announcementMark?.id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      userAtt();
+      toast.success("Anúncio alterado com sucesso!");
+      setModalCars(null);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error("Ocorreu um erro");
+      }
+    } finally {
+      setButtonLoadingCars(false);
+    }
+  };
+
+  const deleteAnnouncement = async () => {
+    try {
+      setButtonLoadingCars(true);
+      await api.delete(`/announcement/${announcementMark?.id}`);
+      userAtt();
+      toast.success("Anúncio deletado com sucesso!");
+      setModalCars(null);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error("Ocorreu um erro");
+      }
+    } finally {
+      setButtonLoadingCars(false);
+    }
+  };
+  const createAnnouncement = async (data: requestAnnouncement | unknown) => {
+    try {
+      setButtonLoadingCars(true);
+      await api.post("/announcement", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      userAtt();
+      toast.success("Anúncio Criado com sucesso!");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error("Ocorreu um erro");
+      }
+    } finally {
+      setButtonLoadingCars(false);
+    }
+  };
+
   return (
     <CarsContext.Provider
       value={{
@@ -44,6 +102,10 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
         openModalCars,
         changeAnnouncementMark,
         announcementMark,
+        updateAnnouncement,
+        buttonLoadingCars,
+        deleteAnnouncement,
+        createAnnouncement,
       }}
     >
       {children}

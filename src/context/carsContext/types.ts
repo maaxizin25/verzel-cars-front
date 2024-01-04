@@ -1,3 +1,5 @@
+import { requestAnnouncement } from "../../components/createAnnouncement";
+
 export interface iAppContextProps {
   children: React.ReactNode;
 }
@@ -28,4 +30,8 @@ export interface iAppContext {
   changeOpenModalCars: (value: string | null) => void;
   changeAnnouncementMark: (value: tAnnouncement | null) => void;
   announcementMark: tAnnouncement | null;
+  updateAnnouncement: (data: tAnnouncement) => void;
+  buttonLoadingCars: boolean;
+  deleteAnnouncement: () => void;
+  createAnnouncement: (data: requestAnnouncement | unknown) => void;
 }

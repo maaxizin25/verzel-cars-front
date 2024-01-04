@@ -30,4 +30,7 @@ export interface iAppContext {
   optionsUser: boolean;
   userLogout: () => void;
   loadingLogin: boolean;
+  userAtt: () => void;
+  adminPainelFunction: "anuncio" | "criar" | "conta";
+  changePainelScreen: (value: "anuncio" | "criar" | "conta") => void;
 }

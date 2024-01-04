@@ -21,17 +21,32 @@ export const UserProvider = ({ children }: iAppContextProps) => {
   const [modalUser, setModalUser] = useState(false);
   const [modalType, setModalType] = useState<string>("login");
   const [optionsUser, setOptionsUser] = useState(false);
+  const [idUser, setIdUser] = useState(0);
+  const [adminPainelFunction, setAdminPainelFunction] = useState<
+    "anuncio" | "criar" | "conta"
+  >("anuncio");
 
   useEffect(() => {
     async function verifyToken() {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("id");
+      if (userId) {
+        setIdUser(Number(userId));
+      }
 
       if (token && userId) {
-        setLoadingLogin(true);
-        const user = await api.get(`/users/${userId}`);
-        setUser(user.data);
-        setLoadingLogin(false);
+        const newToken = JSON.parse(token);
+        api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+        try {
+          setLoadingLogin(true);
+          const user = await api.get(`/users/${userId}`);
+          setUser(user.data);
+        } catch (error) {
+          console.error;
+          userLogout();
+        } finally {
+          setLoadingLogin(false);
+        }
       }
     }
     verifyToken();
@@ -63,10 +78,10 @@ export const UserProvider = ({ children }: iAppContextProps) => {
     try {
       setStates("loadingLogin", true);
       const userLogin = await api.post("/users/login", data);
-      let token = userLogin.data.refresh;
-      localStorage.setItem("token", token);
-      token = jwtDecode(userLogin.data.refresh);
-      localStorage.setItem("id", token.user_id);
+      let token = userLogin.data.access;
+      localStorage.setItem("token", JSON.stringify(token));
+      token = jwtDecode(token);
+      localStorage.setItem("id", JSON.stringify(token.user_id));
       setLoginClick(true);
       toast.success("Login efetuado com sucesso.");
       setStates("modalUser", false);
@@ -105,6 +120,22 @@ export const UserProvider = ({ children }: iAppContextProps) => {
     localStorage.removeItem("token");
     setUser(null);
   };
+  const userAtt = async () => {
+    try {
+      setStates("loadingLogin", true);
+      const response = await api.get(`/users/${idUser}`);
+      setUser(response.data);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error("Erro interno");
+      }
+    } finally {
+      setStates("loadingLogin", false);
+    }
+  };
+  const changePainelScreen = (value: "anuncio" | "criar" | "conta") => {
+    setAdminPainelFunction(value);
+  };
 
   return (
     <UserContext.Provider
@@ -120,6 +151,9 @@ export const UserProvider = ({ children }: iAppContextProps) => {
         optionsUser,
         userLogout,
         loadingLogin,
+        userAtt,
+        adminPainelFunction,
+        changePainelScreen,
       }}
     >
       {" "}

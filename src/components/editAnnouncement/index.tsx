@@ -5,7 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { tAnnouncement } from "../../context/carsContext/types";
 
 export const EditAnnouncement = () => {
-  const { announcementMark } = useContext(CarsContext);
+  const { announcementMark, updateAnnouncement, buttonLoadingCars } =
+    useContext(CarsContext);
   const announcements = announcementMark!;
 
   const {
@@ -15,7 +16,7 @@ export const EditAnnouncement = () => {
   } = useForm<tAnnouncement>();
 
   const onSubmit: SubmitHandler<tAnnouncement> = (data) => {
-    console.log(data);
+    updateAnnouncement(data);
   };
 
   return (
@@ -133,9 +134,7 @@ export const EditAnnouncement = () => {
             {...register("transmissao", { required: true })}
             name="transmissao"
             id="Transmissao"
-            defaultValue={
-              announcements.transmissao == "A" ? "Automático" : "Manual"
-            }
+            defaultValue={announcements.transmissao == "A" ? "A" : "M"}
           >
             <option value="A">Automático</option>
             <option value="M">Manual</option>
@@ -155,7 +154,7 @@ export const EditAnnouncement = () => {
           )}
         </div>
         <button type="submit" className="submit-button">
-          Salvar alterações
+          {buttonLoadingCars ? "Carregando..." : "Salvar alterações"}
         </button>
       </form>
     </EditAnnouncementStyle>
