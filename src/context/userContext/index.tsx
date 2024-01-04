@@ -17,8 +17,10 @@ export const UserProvider = ({ children }: iAppContextProps) => {
   const [user, setUser] = useState<iUserData | null>(null);
   const [loginClick, setLoginClick] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingLogin, setLoadingLogin] = useState(false);
   const [modalUser, setModalUser] = useState(false);
   const [modalType, setModalType] = useState<string>("login");
+  const [optionsUser, setOptionsUser] = useState(false);
 
   useEffect(() => {
     async function verifyToken() {
@@ -26,10 +28,10 @@ export const UserProvider = ({ children }: iAppContextProps) => {
       const userId = localStorage.getItem("id");
 
       if (token && userId) {
-        setLoading(true);
+        setLoadingLogin(true);
         const user = await api.get(`/users/${userId}`);
         setUser(user.data);
-        setLoading(false);
+        setLoadingLogin(false);
       }
     }
     verifyToken();
@@ -43,6 +45,11 @@ export const UserProvider = ({ children }: iAppContextProps) => {
       case "modalUser":
         setModalUser(value);
         return;
+      case "optionsUser":
+        setOptionsUser(value);
+        return;
+      case "loadingLogin":
+        setLoadingLogin(value);
     }
   };
   const changeModalType = () => {
@@ -54,7 +61,7 @@ export const UserProvider = ({ children }: iAppContextProps) => {
   };
   const userLogin = async (data: iFormInputLogin) => {
     try {
-      setStates("loading", true);
+      setStates("loadingLogin", true);
       const userLogin = await api.post("/users/login", data);
       let token = userLogin.data.refresh;
       localStorage.setItem("token", token);
@@ -72,7 +79,7 @@ export const UserProvider = ({ children }: iAppContextProps) => {
         toast.error("Erro interno");
       }
     } finally {
-      setStates("loading", false);
+      setStates("loadingLogin", false);
     }
   };
   const userRegister = async (data: iFormInputRegister) => {
@@ -93,6 +100,11 @@ export const UserProvider = ({ children }: iAppContextProps) => {
       setStates("loading", false);
     }
   };
+  const userLogout = () => {
+    localStorage.removeItem("id");
+    localStorage.removeItem("token");
+    setUser(null);
+  };
 
   return (
     <UserContext.Provider
@@ -105,6 +117,9 @@ export const UserProvider = ({ children }: iAppContextProps) => {
         changeModalType,
         userLogin,
         userRegister,
+        optionsUser,
+        userLogout,
+        loadingLogin,
       }}
     >
       {" "}

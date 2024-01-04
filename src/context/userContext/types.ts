@@ -27,4 +27,7 @@ export interface iAppContext {
   changeModalType: () => void;
   userLogin: (data: iFormInputLogin) => void;
   userRegister: (data: iFormInputRegister) => void;
+  optionsUser: boolean;
+  userLogout: () => void;
+  loadingLogin: boolean;
 }

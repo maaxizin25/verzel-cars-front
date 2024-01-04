@@ -32,15 +32,44 @@ export const NavBarStyled = styled.nav`
       align-items: center;
       justify-content: center;
       gap: 10px;
+      margin-left: 60px;
       padding-left: 5px;
       border-left: 1px solid black;
       height: 100%;
+      position: relative;
+      cursor: pointer;
       button {
         background-color: transparent;
         font-size: 22px;
       }
       .loginUser {
         font-size: 15px;
+      }
+    }
+    .modalOptions {
+      top: 45px;
+      z-index: 1000;
+      display: flex;
+      padding: 20px 0px;
+      flex-direction: column;
+      gap: 10px;
+      align-items: start;
+      width: 80px;
+      position: absolute;
+      background-color: white;
+      height: 80px;
+      right: 0px;
+      padding: 20px 10px;
+      border-radius: 0px 0px 8px 8px;
+      p {
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 8px;
+        font-weight: 900;
+      }
+      p:hover {
+        background-color: red;
+        color: white;
       }
     }
   }

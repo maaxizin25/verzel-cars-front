@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { iFormInputRegister } from "../../context/userContext/types";
 
 export const FormRegisterComponent = () => {
-  const { loading, userRegister } = useContext(UserContext);
+  const { loadingLogin, userRegister } = useContext(UserContext);
   const { register, handleSubmit } = useForm<iFormInputRegister>();
   const onSubmitRegister: SubmitHandler<iFormInputRegister> = (data) => {
     userRegister(data);
@@ -27,7 +27,7 @@ export const FormRegisterComponent = () => {
         {...register("password", { required: true })}
         placeholder="Digite sua senha"
       />
-      <button>{loading ? "Carregando..." : "Registrar"}</button>
+      <button>{loadingLogin ? "Carregando..." : "Registrar"}</button>
     </form>
   );
 };

@@ -10,7 +10,7 @@ interface iFormInput {
 }
 
 export const LoginAndRegisterComponent = () => {
-  const { modalType, changeModalType, loading, userLogin } =
+  const { modalType, changeModalType, loadingLogin, userLogin, setStates } =
     useContext(UserContext);
 
   const { register, handleSubmit } = useForm<iFormInput>();
@@ -22,7 +22,12 @@ export const LoginAndRegisterComponent = () => {
   return (
     <LoginAndRegisterComponentStyle>
       <div>
-        <button className="closed-button">X</button>
+        <button
+          onClick={() => setStates("modalUser", false)}
+          className="closed-button"
+        >
+          X
+        </button>
         <span>
           <h2>{modalType === "login" ? "Entrar" : "Registrar"}</h2>
         </span>
@@ -38,7 +43,7 @@ export const LoginAndRegisterComponent = () => {
               type="password"
               placeholder="Digite sua senha"
             />
-            <button>{loading ? "Carregando..." : "Efetuar Login"}</button>
+            <button>{loadingLogin ? "Carregando..." : "Efetuar Login"}</button>
           </form>
         ) : (
           <FormRegisterComponent />
