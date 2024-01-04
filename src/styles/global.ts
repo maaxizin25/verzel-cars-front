@@ -23,5 +23,7 @@ li {
 
 :root {
     --color-primary: red;
+    --color-line-border: rgba(211, 211, 211, 0.54);
+    --color-white-smoke: #f3f5f8;
 }
 `;

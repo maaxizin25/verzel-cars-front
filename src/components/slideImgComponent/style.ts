@@ -19,7 +19,7 @@ export const SlideImgComponentStyle = styled.div`
     }
     .text-and-input {
       position: absolute;
-      top: 50%;
+      top: 40%;
       position: absolute;
       margin: 0 auto;
       width: 100%;
