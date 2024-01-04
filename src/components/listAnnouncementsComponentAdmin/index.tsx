@@ -6,13 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { ModalComponentAnnouncementItens } from "../modalComponentItens";
 import { DeleteAnnouncementComponent } from "../deleteAnnouncement";
 import { CarsContext } from "../../context/carsContext";
+import { EditAnnouncement } from "../editAnnouncement";
 
 export const ListAnnouncementsComponentAdmin = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [showMenuAnnouncement, setShowMenuAnnouncement] = useState(false);
-  const { openModalCars, changeOpenModalCars } = useContext(CarsContext);
+  const { openModalCars, changeOpenModalCars, changeAnnouncementMark } =
+    useContext(CarsContext);
 
+  console.log(openModalCars);
   return (
     <ListAnnouncementsComponentsAdminStyle>
       {openModalCars === "delete" ? (
@@ -21,9 +24,7 @@ export const ListAnnouncementsComponentAdmin = () => {
         />
       ) : (
         openModalCars === "edit" && (
-          <ModalComponentAnnouncementItens
-            children={<DeleteAnnouncementComponent />}
-          />
+          <ModalComponentAnnouncementItens children={<EditAnnouncement />} />
         )
       )}
 
@@ -59,10 +60,21 @@ export const ListAnnouncementsComponentAdmin = () => {
                 <button onClick={() => navigate(`/detail/${e.id}`)}>
                   Ver anúncio
                 </button>
-                <button onClick={() => changeOpenModalCars("edit")}>
+                <button
+                  onClick={() => {
+                    changeAnnouncementMark(e);
+                    changeOpenModalCars("edit");
+                    setShowMenuAnnouncement(!showMenuAnnouncement);
+                  }}
+                >
                   Editar anúncio
                 </button>
-                <button onClick={() => changeOpenModalCars("delete")}>
+                <button
+                  onClick={() => {
+                    setShowMenuAnnouncement(!showMenuAnnouncement);
+                    changeOpenModalCars("delete");
+                  }}
+                >
                   Deletar anúncio
                 </button>
               </span>

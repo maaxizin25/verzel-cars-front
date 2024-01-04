@@ -26,4 +26,6 @@ export interface iAppContext {
   announcementList: null | [tAnnouncement];
   openModalCars: null | string;
   changeOpenModalCars: (value: string | null) => void;
+  changeAnnouncementMark: (value: tAnnouncement | null) => void;
+  announcementMark: tAnnouncement | null;
 }

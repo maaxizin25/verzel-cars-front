@@ -9,7 +9,7 @@ export const DeleteAnnouncementComponent = () => {
       <h2>Deletar Anúncio?</h2>
       <div className="container-button">
         <button onClick={() => "Delete Function"}>Sim</button>
-        <button onClick={changeOpenModalCars}>Não</button>
+        <button onClick={() => changeOpenModalCars(null)}>Não</button>
       </div>
     </DeleteAnnouncementComponentStyled>
   );

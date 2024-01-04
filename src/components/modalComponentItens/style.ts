@@ -15,7 +15,7 @@ export const ModalComponentItensStyle = styled.div`
   .modal {
     background-color: white;
     position: relative;
-    width: 400px;
+    max-width: 1200px;
     padding: 20px;
     border-radius: 16px;
     .closed-button {

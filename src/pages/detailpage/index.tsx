@@ -10,7 +10,10 @@ export const DetailPage = () => {
   const { id } = useParams();
   const { announcementList } = useContext(CarsContext);
 
-  const car = announcementList!.find((e) => e.id === Number(id));
+  let car = null;
+  if (announcementList) {
+    car = announcementList!.find((e) => e.id === Number(id));
+  }
 
   if (car) {
     return (
@@ -26,5 +29,7 @@ export const DetailPage = () => {
         </DetailPageStyle>
       </>
     );
+  } else {
+    return <h2>Carregando...</h2>;
   }
 };
