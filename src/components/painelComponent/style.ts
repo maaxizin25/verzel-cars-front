@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const PainelComponentStyle = styled.div`
   background-color: #1f1f1f !important;
-  width: 303px;
+  width: 100%;
+  max-width: 303px;
+  border-radius: 16px 0px 0px 16px;
   color: white;
   display: flex;
   flex-direction: column;

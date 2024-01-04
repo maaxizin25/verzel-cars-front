@@ -10,6 +10,7 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
   const [announcementList, setAnnouncementList] = useState<
     [tAnnouncement] | null
   >(null);
+  const [openModalCars, setModalCars] = useState<null | string>(null);
 
   useEffect(() => {
     async function getAnnouncement() {
@@ -26,9 +27,14 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
 
     getAnnouncement();
   }, []);
+  const changeOpenModalCars = (value: string | null) => {
+    setModalCars(value);
+  };
 
   return (
-    <CarsContext.Provider value={{ announcementList }}>
+    <CarsContext.Provider
+      value={{ announcementList, changeOpenModalCars, openModalCars }}
+    >
       {children}
     </CarsContext.Provider>
   );
