@@ -11,16 +11,23 @@ export const ListCarComponentStyle = styled.div`
     align-items: center;
     justify-content: center;
     gap: 10px;
+    padding-bottom: 20px;
     li {
       max-width: 333px;
       background-color: #1f1f1f;
       border-radius: 16px;
       max-height: 450px;
       cursor: pointer;
-      img {
+      .container-imgs {
         width: 100%;
-        border-radius: 16px;
+        height: 220px;
+        img {
+          width: 100%;
+          border-radius: 16px;
+          height: 100%;
+        }
       }
+
       .texts {
         padding: 10px;
         display: flex;

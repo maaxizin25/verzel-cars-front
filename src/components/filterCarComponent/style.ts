@@ -5,6 +5,7 @@ export const FilterCarComponentStyle = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
+  height: 100%;
   div:nth-child(1) {
     display: flex;
     align-items: center;
