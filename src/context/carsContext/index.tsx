@@ -30,7 +30,10 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
       try {
         setStates("loading", true);
         const listAnnouncements = await api.get("/announcement");
-        setAnnouncementList(listAnnouncements.data.results);
+        const sortedProducts = [...listAnnouncements.data.results].sort(
+          (a, b) => a.valor - b.valor
+        ) as [tAnnouncement];
+        setAnnouncementList(sortedProducts);
       } catch (error) {
         console.log(error);
       } finally {
@@ -103,7 +106,10 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
     try {
       setStates("loading", true);
       const listAnnouncements = await api.get("/announcement");
-      setAnnouncementList(listAnnouncements.data.results);
+      const sortedProducts = [...listAnnouncements.data.results].sort(
+        (a, b) => a.valor - b.valor
+      ) as [tAnnouncement];
+      setAnnouncementList(sortedProducts);
     } catch (error) {
       console.log(error);
     } finally {
