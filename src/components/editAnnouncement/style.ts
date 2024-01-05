@@ -19,6 +19,9 @@ export const EditAnnouncementStyle = styled.div`
       width: 50%;
     }
   }
+  textarea {
+    height: 85px;
+  }
   label {
     color: #575757;
     font-size: 12px;

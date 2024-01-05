@@ -138,8 +138,6 @@ export const UserProvider = ({ children }: iAppContextProps) => {
     setAdminPainelFunction(value);
   };
   const userUpdate = async (data: userUpdate) => {
-    console.log(data);
-
     try {
       setStates("loadingLogin", true);
       const response = await api.patch(
