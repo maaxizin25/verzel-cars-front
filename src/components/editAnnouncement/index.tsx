@@ -28,7 +28,7 @@ export const EditAnnouncement = () => {
         <div>
           <label htmlFor="nome">Nome</label>
           <input
-            {...register("nome", { required: true, minLength: 18 })}
+            {...register("nome", { required: true, minLength: 10 })}
             id="nome"
             type="text"
             defaultValue={announcements.nome}
@@ -54,7 +54,7 @@ export const EditAnnouncement = () => {
           )}
           <label htmlFor="Modelo">Modelo</label>
           <input
-            {...register("model", { required: true, minLength: 5 })}
+            {...register("model", { required: true, minLength: 2 })}
             id="Modelo"
             defaultValue={announcements.model}
             type="text"
@@ -67,7 +67,7 @@ export const EditAnnouncement = () => {
           )}
           <label htmlFor="Ano">Ano</label>
           <input
-            {...register("ano", { required: true, minLength: 4 })}
+            {...register("ano", { required: true, min: 1900, max: 2023 })}
             id="Ano"
             type="number"
             defaultValue={announcements.ano}
@@ -75,9 +75,8 @@ export const EditAnnouncement = () => {
           {errors.ano && errors.ano.type === "required" && (
             <p>O Ano é obrigatório.</p>
           )}
-          {errors.ano && errors.ano.type === "minLength" && (
-            <p>O Ano deve ter pelo menos 4 caracteres.</p>
-          )}
+          {(errors.ano && errors.ano.type === "min") ||
+            (errors.ano && errors.ano.type === "max" && <p>Data Invalida</p>)}
           <label htmlFor="Valor">Valor</label>
           <input
             {...register("valor", { required: true, minLength: 4 })}
@@ -105,7 +104,11 @@ export const EditAnnouncement = () => {
           )}
           <label htmlFor="Placa">Placa</label>
           <input
-            {...register("placa", { required: true, minLength: 4 })}
+            {...register("placa", {
+              required: true,
+              minLength: 4,
+              maxLength: 7,
+            })}
             id="Placa"
             type="text"
             defaultValue={announcements.placa}
@@ -116,9 +119,16 @@ export const EditAnnouncement = () => {
           {errors.placa && errors.placa.type === "minLength" && (
             <p>A Placa deve ter pelo menos 4 caracteres.</p>
           )}
+          {errors.placa && errors.placa.type === "maxLength" && (
+            <p>A Placa deve ter no máximo 7 caracteres.</p>
+          )}
           <label htmlFor="Cor">Cor</label>
           <input
-            {...register("cor", { required: true, minLength: 4 })}
+            {...register("cor", {
+              required: true,
+              minLength: 4,
+              maxLength: 10,
+            })}
             id="Cor"
             type="text"
             defaultValue={announcements.cor}
@@ -140,10 +150,9 @@ export const EditAnnouncement = () => {
             <option value="M">Manual</option>
           </select>
           <label htmlFor="Descricao">Descricao</label>
-          <input
+          <textarea
             {...register("descricao", { required: true, minLength: 20 })}
             id="Descricao"
-            type="textarea"
             defaultValue={announcements.descricao}
           />
           {errors.descricao && errors.descricao.type === "required" && (
