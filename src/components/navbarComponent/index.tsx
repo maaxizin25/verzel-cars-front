@@ -16,7 +16,7 @@ export const NavBarComponent = () => {
       {modalUser && <LoginAndRegisterComponent />}
       <div className="global-container">
         <div>
-          <h2>Verzel Cars</h2>
+          <h2 onClick={() => navigate("/home")}>Verzel Cars</h2>
         </div>
         <div className="links-and-buttons-navbar">
           <a href="">Carros</a>

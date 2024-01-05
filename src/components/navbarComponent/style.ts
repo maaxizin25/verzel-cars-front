@@ -15,6 +15,7 @@ export const NavBarStyled = styled.nav`
   div:nth-child(1) {
     h2 {
       color: var(--color-primary);
+      cursor: pointer;
     }
   }
   .links-and-buttons-navbar {

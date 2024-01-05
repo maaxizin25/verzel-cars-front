@@ -1,6 +1,7 @@
 import React from "react";
 import { DetailCarImgComponentStyle } from "./style";
 import { tAnnouncement } from "../../context/carsContext/types";
+import { useState } from "react";
 
 interface DetailCarImgComponentProps {
   car: tAnnouncement;
@@ -9,14 +10,27 @@ interface DetailCarImgComponentProps {
 export const DetailCarImgComponent: React.FC<DetailCarImgComponentProps> = ({
   car,
 }) => {
+  const [alreadyImg, setAlreadyImg] = useState<string | null>(null);
+
   return (
     <DetailCarImgComponentStyle>
-      <div>
-        <img src={car.photos[0].image} alt="" />
+      <div className="img-principal">
+        {alreadyImg ? (
+          <img src={alreadyImg} alt="" />
+        ) : (
+          <img src={car.photos[0].image} alt="" />
+        )}
       </div>
       <div className="img-preview">
         {car.photos.map((e) => {
-          return <img src={e.image} key={e.id} alt="" />;
+          return (
+            <img
+              onClick={() => setAlreadyImg(e.image)}
+              src={e.image}
+              key={e.id}
+              alt=""
+            />
+          );
         })}
       </div>
       <span>

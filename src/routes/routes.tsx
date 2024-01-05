@@ -8,6 +8,7 @@ export const RoutersMain = () => {
   return (
     <Routes>
       <Route path="*" element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/detail/:id" element={<DetailPage />} />
       <Route element={<ProtectedRoutes />}>
         <Route path="/admin" element={<AdminPage />} />

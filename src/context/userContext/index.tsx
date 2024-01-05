@@ -100,7 +100,7 @@ export const UserProvider = ({ children }: iAppContextProps) => {
   };
   const userRegister = async (data: iFormInputRegister) => {
     try {
-      setStates("loading", true);
+      setStates("loadingLogin", true);
       await api.post("/users", data);
       changeModalType();
       toast.success("Usuário criado com sucesso!");
@@ -113,7 +113,7 @@ export const UserProvider = ({ children }: iAppContextProps) => {
         toast.error("Erro interno");
       }
     } finally {
-      setStates("loading", false);
+      setStates("loadingLogin", false);
     }
   };
   const userLogout = () => {

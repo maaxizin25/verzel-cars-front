@@ -18,7 +18,8 @@ export interface requestAnnouncement {
 }
 
 export const CreateAnnouncementComponent = () => {
-  const { buttonLoadingCars, createAnnouncement } = useContext(CarsContext);
+  const { buttonLoadingCars, createAnnouncement, carAtt } =
+    useContext(CarsContext);
   const [names, setNames] = useState<File[]>([]);
   const {
     register,
@@ -37,6 +38,7 @@ export const CreateAnnouncementComponent = () => {
       formData.append("image", photo);
     }
     createAnnouncement(formData);
+    carAtt();
   };
 
   return (

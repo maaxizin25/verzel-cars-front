@@ -17,6 +17,13 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
   const [announcementMark, setAnnouncementMark] =
     useState<tAnnouncement | null>(null);
   const [buttonLoadingCars, setButtonLoadingCars] = useState(false);
+  const [filterListAnnouncement, setFilterListAnnouncement] = useState<
+    [tAnnouncement] | null | tAnnouncement[]
+  >(null);
+
+  const filterCarList: tAnnouncement[] | null = !filterListAnnouncement
+    ? announcementList
+    : filterListAnnouncement;
 
   useEffect(() => {
     async function getAnnouncement() {
@@ -59,7 +66,6 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
       setButtonLoadingCars(false);
     }
   };
-
   const deleteAnnouncement = async () => {
     try {
       setButtonLoadingCars(true);
@@ -93,6 +99,28 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
       setButtonLoadingCars(false);
     }
   };
+  const carAtt = async () => {
+    try {
+      setStates("loading", true);
+      const listAnnouncements = await api.get("/announcement");
+      setAnnouncementList(listAnnouncements.data.results);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setStates("loading", false);
+    }
+    console.log(carAtt);
+  };
+  const carFilter = (letter: string) => {
+    if (announcementList) {
+      const products: tAnnouncement[] | [] = announcementList?.filter((e) =>
+        e.nome.toLowerCase().trim().includes(letter)
+      );
+      if (products) {
+        setFilterListAnnouncement(products);
+      }
+    }
+  };
 
   return (
     <CarsContext.Provider
@@ -106,6 +134,9 @@ export const CarsProvider = ({ children }: iAppContextProps) => {
         buttonLoadingCars,
         deleteAnnouncement,
         createAnnouncement,
+        carAtt,
+        filterCarList,
+        carFilter,
       }}
     >
       {children}
