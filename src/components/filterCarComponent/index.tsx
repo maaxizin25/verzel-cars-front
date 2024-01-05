@@ -19,7 +19,7 @@ export const FilterCarComponent = () => {
   return (
     <FilterCarComponentStyle>
       <div>
-        <h2>Filtros</h2>
+        <h2>Filtros - Em andamento</h2>
         <p className="clear-filter">Limpar Filtros</p>
       </div>
       <ul>

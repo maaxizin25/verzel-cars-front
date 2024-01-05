@@ -36,4 +36,7 @@ export interface iAppContext {
   buttonLoadingCars: boolean;
   deleteAnnouncement: () => void;
   createAnnouncement: (data: requestAnnouncement | unknown) => void;
+  carAtt: () => void;
+  filterCarList: null | tAnnouncement[];
+  carFilter: (letter: string) => void;
 }

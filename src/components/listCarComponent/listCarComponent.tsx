@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 export const ListCarComponent = () => {
-  const { announcementList } = useContext(CarsContext);
+  const { filterCarList } = useContext(CarsContext);
   const { loading } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -16,14 +16,14 @@ export const ListCarComponent = () => {
         {loading ? (
           <h2>Carregando</h2>
         ) : (
-          announcementList?.map((e) => (
+          filterCarList?.map((e) => (
             <li onClick={() => navigate(`detail/${e.id}`)} key={e.id}>
-              <div>
+              <div className="container-imgs">
                 <img src={e.photos[0].image} alt="" />
               </div>
               <div className="texts">
                 <h2>
-                  {e.marca} • {e.model}
+                  {e.nome} • {e.model}
                 </h2>
                 <p>
                   {e.ano} • {e.km + "KM"} • {e.nome}
@@ -31,7 +31,7 @@ export const ListCarComponent = () => {
               </div>
               <div className="price">
                 <p>Preço a vista</p>
-                <h2>R$ {e.valor}</h2>
+                <h2>R$ {e.valor.toLocaleString("pt-BR")}</h2>
               </div>
               <div className="saller">
                 <p>Vendedor: {e.user.name}</p>

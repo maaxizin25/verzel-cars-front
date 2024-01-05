@@ -11,6 +11,15 @@ export const DetailCarImgComponentStyle = styled.div`
       width: 100%;
     }
   }
+  .img-principal {
+    width: 810px;
+    height: 505px;
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
   .img-preview {
     display: flex;
     flex-wrap: wrap;
